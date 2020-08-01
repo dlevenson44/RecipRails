@@ -1,4 +1,7 @@
 class ApiController < ApplicationController
+  def index
+  end
+
   def require_login
     authenticate_token || render_unauthorized('Access Denied: Unauthorized Access')
   end
