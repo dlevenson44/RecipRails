@@ -1,10 +1,19 @@
 import { createStore, action } from 'easy-peasy';
 
 const store = createStore({
-  todos: {
-    items: ['Create store', 'Wrap application', 'Use store'],
-    add: action((state, payload) => {
-      state.items.push(payload)
+  links: {
+    authenticated: ['Saved Recipes', 'Edit Profile', 'Logout'],
+    constant: 'Home',
+    unauthenticated: ['Login', 'Register']
+  },
+  session: {
+    isAuthenticated: false,
+    isLoading: false,
+    isLoaded: true,
+    loggedInUser: null,
+    startLogin: action((state, payload) => {
+      state.isLoading = true;
+      state.isLoaded = false;
     })
   }
 });
