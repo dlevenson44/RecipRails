@@ -1,4 +1,6 @@
 import { createStore, action } from 'easy-peasy';
+import axios from 'axios';
+import Auth from '../components/Authentication/authHelpers';
 
 const store = createStore({
   links: {
@@ -9,13 +11,27 @@ const store = createStore({
   session: {
     isAuthenticated: false,
     isLoading: false,
-    isLoaded: true,
     loggedInUser: null,
-    startLogin: action((state, payload) => {
+    login: action((state, payload) => {
       state.isLoading = true;
-      state.isLoaded = false;
-    })
-  }
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+    
+      delete payload.confirmPassword;
+
+      try {
+        axios.post('/register', payload, { headers })
+          .then(res => {
+            Auth.authenticateToken(res.data.token);
+            state.user = res.data;
+            state.isAuthenticated = true;
+          });
+      } catch (e) {
+        console.error(`Error Creating User: ${e}`);
+      }
+    }),
+  },
 });
 
 export default store;
