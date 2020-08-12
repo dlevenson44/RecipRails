@@ -7,8 +7,8 @@ import theme from '../styles/theme';
 import store from '../store/globalStore';
 import Nav from './Nav';
 import Home from './Home';
-import Login from './Login';
-import Register from './Register';
+import Login from './Authentication/Login';
+import Register from './Authentication/Register';
 
 
 const App = () => {
