@@ -1,11 +1,11 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link, Typography } from '@material-ui/core';
 
 const Nav = props => {
 	const { links, isAuthenticated } = props;
-	console.log('is authe?', isAuthenticated)
+
 	return (
 		<Typography>
 			<Link component={RouterLink} to="/">{links.constant}</Link>
