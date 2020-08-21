@@ -1,4 +1,4 @@
-import { createStore, action } from 'easy-peasy';
+import { createStore, thunk } from 'easy-peasy';
 import axios from 'axios';
 import Auth from '../components/Authentication/authHelpers';
 
@@ -12,7 +12,7 @@ const store = createStore({
     isAuthenticated: false,
     isLoading: false,
     loggedInUser: null,
-    register: action((state, payload) => {
+    register: thunk(async (state, payload) => {
       state.isLoading = true;
       const headers = {
         'Content-Type': 'application/json',
@@ -22,14 +22,16 @@ const store = createStore({
       const user = { user: payload };
 
       try {
-        axios.post('/register', user, { headers })
+        await axios.post('/register', user, { headers })
           .then(res => {
             Auth.authenticateToken(res.data.token);
             state.user = res.data;
             state.isAuthenticated = true;
+            state.isLoading = false;
           });
       } catch (e) {
         console.error(`Error Creating User: ${e}`);
+        state.isLoading = false;
       }
     }),
   },
