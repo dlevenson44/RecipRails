@@ -12,8 +12,29 @@ const store = createStore({
     isAuthenticated: false,
     isLoading: false,
     loggedInUser: null,
+    logout: thunk(async (actions, payload) => {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `token ${payload}`,
+        'token': payload,
+      };
+
+      try {
+        await axios.delete('/logout', { headers })
+          .then(() => {
+            Auth.deauthenticateToken();
+            actions.removeUser();
+          });
+      } catch (e) {
+        console.error(`Error Logging Out: ${e}`);
+      }
+    }),
+    removeUser: action(state => {
+      state.isAuthenticated = false;
+      state.loggedInUser = null;
+    }),
     register: thunk(async (actions, payload) => {
-      actions.startLoad();
+      actions.setLoad();
       const headers = {
         'Content-Type': 'application/json',
       };
@@ -29,7 +50,7 @@ const store = createStore({
           });
       } catch (e) {
         console.error(`Error Creating User: ${e}`);
-        state.isLoading = false;
+        actions.setLoad();
       }
     }),
     setUser: action((state, user) => {
@@ -37,8 +58,8 @@ const store = createStore({
       state.isAuthenticated = true;
       state.loggedInUser = user;
     }),
-    startLoad: action((state) => {
-      state.isLoading = true;
+    setLoad: action((state) => {
+      state.isLoading = !state.isLoading;
     })
   },
 });
