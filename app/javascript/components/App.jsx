@@ -19,7 +19,7 @@ const App = () => {
 				<CssBaseline />
 				<Container>
 					<BrowserRouter>
-						<Nav links={state.links} isAuthenticated={state.session.isAuthenticated} />
+						<Nav links={state.links} isAuthenticated={state.user.isAuthenticated} />
 						<Switch>
 							<Route exact path="/" component={() => <Home state={state} />} />
 							<Route path="/login" component={() => <Login state={state} />} />

@@ -5,8 +5,8 @@ import style from './forms';
 
 const Register = () => {
 	const classes = style();
-	const register = useStoreActions(actions => actions.session.register);
-	const session = useStoreState(state => state.session);
+	const register = useStoreActions(actions => actions.user.register);
+	const session = useStoreState(state => state.user);
 	const [user, setUser] = useState({
 		username: '',
 		password: '',
