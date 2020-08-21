@@ -5,7 +5,6 @@ class User < ApplicationRecord
   (?=.*\d)           # Must contain a digit
   (?=.*[a-z])        # Must contain a lower case character
   (?=.*[A-Z])        # Must contain an upper case character
-  (?=.*[[:^alnum:]])
 /x
 
   validates :username, uniqueness: true, length: @username_length
