@@ -8,20 +8,21 @@ const store = createStore({
     constant: 'Home',
     unauthenticated: ['Login', 'Register']
   },
-  session: {
+  user: {
     isAuthenticated: false,
     isLoading: false,
     loggedInUser: null,
-    login: action((state, payload) => {
+    register: action((state, payload) => {
       state.isLoading = true;
       const headers = {
         'Content-Type': 'application/json',
       };
-    
+
       delete payload.confirmPassword;
+      const user = { user: payload };
 
       try {
-        axios.post('/register', payload, { headers })
+        axios.post('/register', user, { headers })
           .then(res => {
             Auth.authenticateToken(res.data.token);
             state.user = res.data;

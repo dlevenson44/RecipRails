@@ -5,11 +5,11 @@ import style from './forms';
 
 const Register = () => {
 	const classes = style();
-	const login = useStoreActions(actions => actions.session.login);
+	const register = useStoreActions(actions => actions.session.register);
 	const session = useStoreState(state => state.session);
 	const [user, setUser] = useState({
 		username: '',
-		password_digest: '',
+		password: '',
 		confirmPassword: '',
 		name: '',
 		email: '',
@@ -37,8 +37,8 @@ const Register = () => {
 				required 
 				type="password"
 				label="Password"
-				name="password_digest"
-				value={user.password_digest}
+				name="password"
+				value={user.password}
 				onChange={handleChange}
 				helperText="Password must contain at least 8 characters, a lower case letter, an upper case letter, a number, and a special character."
 				disabled={session.isLoading}
@@ -70,7 +70,7 @@ const Register = () => {
 				onChange={handleChange}
 				disabled={session.isLoading}
 			/>
-			<Button onClick={() => login(user)} color="primary" variant="contained" disabled={session.isLoading}>CREATE ACCOUNT</Button>
+			<Button onClick={() => register(user)} color="primary" variant="contained" disabled={session.isLoading}>CREATE ACCOUNT</Button>
 		</Container>
 	)
 };
