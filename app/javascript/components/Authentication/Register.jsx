@@ -20,6 +20,10 @@ const Register = () => {
 		setUser({ ...user, [name]: value });
 	};
 
+	const handleClick = async (user) => {
+		await register(user);
+	};
+
 	return (
 		<Container maxWidth="sm" className={classes.container}>
 			<Typography>CREATE ACCOUNT</Typography>
@@ -70,7 +74,7 @@ const Register = () => {
 				onChange={handleChange}
 				disabled={session.isLoading}
 			/>
-			<Button onClick={() => register(user)} color="primary" variant="contained" disabled={session.isLoading}>CREATE ACCOUNT</Button>
+			<Button onClick={() => handleClick(user)} color="primary" variant="contained" disabled={session.isLoading}>CREATE ACCOUNT</Button>
 		</Container>
 	)
 };
