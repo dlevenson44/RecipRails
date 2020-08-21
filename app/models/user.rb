@@ -9,7 +9,8 @@ class User < ApplicationRecord
 /x
 
   validates :username, uniqueness: true, length: @username_length
-  validates :password_digest, format: { with: PASSWORD_REQUIREMENTS }
+  has_secure_password
+  validates :password, format: { with: PASSWORD_REQUIREMENTS }
   has_secure_token :auth_token
 
   # used to logout
@@ -21,7 +22,7 @@ class User < ApplicationRecord
   # against the password_digest in the db
   def self.validate_login(username, password)
 		user = find_by(username: username)
-		if user.password_digest == password
+		if user && user.authenticate(password)
       user
     end
   end

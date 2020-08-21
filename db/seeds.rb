@@ -12,7 +12,7 @@ p 'Creating 50 users from seed file'
 
 50.times do |n|
   User.create! username: generate_username(Faker::Internet.email(name: 3..20)),
-               password_digest: 'abcdefG*9',
+               password: 'abcdefG*9',
                name: Faker::Name.name,
                email: Faker::Internet.email
 
