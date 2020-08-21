@@ -1,5 +1,6 @@
 class UsersController < ApiController
   skip_before_action :verify_authenticity_token
+  before_action :require_login, except: [:create]
 
   def index; end
 
@@ -22,6 +23,6 @@ class UsersController < ApiController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password_digest, :name)
+    params.require(:user).permit(:username, :email, :password, :name)
   end
 end
