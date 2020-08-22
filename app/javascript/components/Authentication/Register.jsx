@@ -17,7 +17,10 @@ const Register = () => {
 	});
 	const { username, password, confirmPassword, email, name } = user;
 	const isFormValid = Validation.isFormValid(username, password, confirmPassword, email, name);
-
+	const isUsernameValid = !Validation.validateUsername(username);
+	const isPasswordValid = !Validation.validatePassword(password);
+	const isConfirmPasswordValid = !Validation.validateConfirmPassword(password, confirmPassword);
+	const isEmailValid = !Validation.validateEmail(email);
 	const handleChange = e => {
 		const { name, value } = e.target;
 		setUser({ ...user, [name]: value });
@@ -34,10 +37,10 @@ const Register = () => {
 				required 
 				label="Username"
 				name="username"
-				value={user.username}
+				value={user.username || ''}
 				onChange={handleChange}
-				helperText="Username must be at least 3 characters."
-				error={Validation.validateUsername(username)}
+				helperText={!isUsernameValid && "Username must be at least 3 characters."}
+				error={!isUsernameValid}
 				disabled={session.isLoading}
 			/>
 			<TextField
@@ -45,10 +48,10 @@ const Register = () => {
 				type="password"
 				label="Password"
 				name="password"
-				value={user.password}
+				value={user.password || ''}
 				onChange={handleChange}
-				helperText="Password must contain at least 8 characters, a lower case letter, an upper case letter, and a number."
-				error={Validation.validatePassword(password)}
+				helperText={!isPasswordValid && "Password must contain at least 8 characters, a lower case letter, an upper case letter, and a number."}
+				error={!isPasswordValid}
 				disabled={session.isLoading}
 			/>
 			<TextField
@@ -56,17 +59,17 @@ const Register = () => {
 				type="password"
 				label="Confirm Password"
 				name="confirmPassword"
-				value={user.confirmPassword}
+				value={user.confirmPassword || ''}
 				onChange={handleChange}
-				helperText="Passwords must match."
-				error={Validation.validateConfirmPassword(password, confirmPassword)}
+				helperText={!isConfirmPasswordValid && "Passwords must match."}
+				error={!isConfirmPasswordValid}
 				disabled={session.isLoading}
 			/>
 			<TextField
 				required 
 				label="Name"
 				name="name"
-				value={user.name}
+				value={user.name || ''}
 				onChange={handleChange}
 				disabled={session.isLoading}
 			/>
@@ -74,9 +77,10 @@ const Register = () => {
 				required 
 				label="Email"
 				name="email"
-				value={user.email}
+				value={user.email || ''}
 				onChange={handleChange}
-				error={Validation.validateEmail(email)}
+				helperText={!isEmailValid && "Email Address Invalid"}
+				error={!isEmailValid}
 				disabled={session.isLoading}
 			/>
 			<Button onClick={() => handleClick(user)} color="primary" variant="contained" disabled={session.isLoading || isFormValid}>CREATE ACCOUNT</Button>
