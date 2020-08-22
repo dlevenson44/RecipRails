@@ -21,7 +21,7 @@ const Nav = props => {
 				))
 			) : (
 				links.authenticated.map(item => (
-					<Link key={item} component={RouterLink} to={`/${item.toLowerCase()}`} onClick={item === 'Logout' ? handleClick : null}>{item}</Link>
+					<Link key={item} component={RouterLink} to={item !== 'Logout' ? `/${item.toLowerCase()}` : '/'} onClick={item === 'Logout' ? handleClick : null}>{item}</Link>
 				))
 			)}
 		</Typography>
