@@ -7,6 +7,8 @@ class UsersController < ApiController
   def create
     user = User.create!(user_params)
     render json: { token: user.auth_token, id: user.id }
+  rescue => e
+    render status: 422, json: { message: e }
   end
 
   def profile_request
