@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Container, TextField, Typography } from '@material-ui/core';
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import Validation from './validation';
 import style from './forms';
 
 const Register = () => {
@@ -14,6 +15,8 @@ const Register = () => {
 		name: '',
 		email: '',
 	});
+	const { username, password, confirmPassword, email, name } = user;
+	const isFormValid = Validation.isFormValid(username, password, confirmPassword, email, name);
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -34,7 +37,7 @@ const Register = () => {
 				value={user.username}
 				onChange={handleChange}
 				helperText="Username must be at least 3 characters."
-				error={user.username.length < 3}
+				error={Validation.validateUsername(username)}
 				disabled={session.isLoading}
 			/>
 			<TextField
@@ -44,7 +47,8 @@ const Register = () => {
 				name="password"
 				value={user.password}
 				onChange={handleChange}
-				helperText="Password must contain at least 8 characters, a lower case letter, an upper case letter, a number, and a special character."
+				helperText="Password must contain at least 8 characters, a lower case letter, an upper case letter, and a number."
+				error={Validation.validatePassword(password)}
 				disabled={session.isLoading}
 			/>
 			<TextField
@@ -55,7 +59,7 @@ const Register = () => {
 				value={user.confirmPassword}
 				onChange={handleChange}
 				helperText="Passwords must match."
-				error={user.password !== user.confirmPassword}
+				error={Validation.validateConfirmPassword(password, confirmPassword)}
 				disabled={session.isLoading}
 			/>
 			<TextField
@@ -72,9 +76,10 @@ const Register = () => {
 				name="email"
 				value={user.email}
 				onChange={handleChange}
+				error={Validation.validateEmail(email)}
 				disabled={session.isLoading}
 			/>
-			<Button onClick={() => handleClick(user)} color="primary" variant="contained" disabled={session.isLoading}>CREATE ACCOUNT</Button>
+			<Button onClick={() => handleClick(user)} color="primary" variant="contained" disabled={session.isLoading || isFormValid}>CREATE ACCOUNT</Button>
 		</Container>
 	)
 };
