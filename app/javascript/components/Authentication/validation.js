@@ -21,7 +21,7 @@ class Validation {
 
 	// confirm password and confirmPassword match
 	static validateConfirmPassword(password, confirmPassword) {
-		if (!!confirmPassword.length && password !== confirmPassword) return true;
+		if (!!confirmPassword && password !== confirmPassword) return true;
 
 		return false;
 	};
@@ -50,11 +50,11 @@ class Validation {
 
 		// Return error if any field is empty
 		if (
-			!username.length ||
-			!password.length ||
-			!confirmPassword.length ||
-			!email.length ||
-			!name.length
+			!username ||
+			!password ||
+			!confirmPassword ||
+			!email ||
+			!name
 		) return true;
 
 		return false;
