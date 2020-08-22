@@ -1,3 +1,5 @@
+import { useStoreState } from 'easy-peasy';
+
 class Validation {
 	// validate username
 	static validateUsername(username) {
@@ -34,6 +36,7 @@ class Validation {
 	}
 
 	static isFormValid(username, password, confirmPassword, email, name) {
+		const error = useStoreState(state => state.user.error);
 		const isUsernameValid = !this.validateUsername(username);
 		const isPasswordValid = !this.validatePassword(password);
 		const isConfirmPasswordValid = !this.validateConfirmPassword(password, confirmPassword);
@@ -50,12 +53,13 @@ class Validation {
 
 		// Return error if any field is empty
 		if (
+			!error && (
 			!username ||
 			!password ||
 			!confirmPassword ||
 			!email ||
 			!name
-		) return true;
+		)) return true;
 
 		return false;
 	};

@@ -12,6 +12,7 @@ const store = createStore({
     isAuthenticated: false,
     isLoading: false,
     loggedInUser: null,
+    error: null,
     logout: thunk(async (actions, payload) => {
       const headers = {
         'Content-Type': 'application/json',
@@ -34,7 +35,7 @@ const store = createStore({
       state.loggedInUser = null;
     }),
     register: thunk(async (actions, payload) => {
-      actions.setLoad();
+      actions.startLoading();
       const headers = {
         'Content-Type': 'application/json',
       };
@@ -49,17 +50,23 @@ const store = createStore({
             actions.setUser(res.data);
           });
       } catch (e) {
+        actions.setFailedRegister(e.response.data.message)
         console.error(`Error Creating User: ${e}`);
-        actions.setLoad();
       }
     }),
     setUser: action((state, user) => {
       state.isLoading = false;
       state.isAuthenticated = true;
       state.loggedInUser = user;
+      state.error = false;
     }),
-    setLoad: action((state) => {
-      state.isLoading = !state.isLoading;
+    setFailedRegister: action((state, payload) => {
+      const errorMessage = payload.slice(19);
+      state.isLoading = false;
+      state.error = errorMessage;
+    }),
+    startLoading: action((state) => {
+      state.isLoading = true;
     })
   },
 });

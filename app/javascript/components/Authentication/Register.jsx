@@ -15,6 +15,7 @@ const Register = () => {
 		name: '',
 		email: '',
 	});
+	const { error, isLoading } = session;
 	const { username, password, confirmPassword, email, name } = user;
 	const isFormValid = Validation.isFormValid(username, password, confirmPassword, email, name);
 	const isUsernameValid = !Validation.validateUsername(username);
@@ -25,7 +26,8 @@ const Register = () => {
 		const { name, value } = e.target;
 		setUser({ ...user, [name]: value });
 	};
-
+	console.log('isLoading?   ', isLoading)
+	console.log('isFormValid?  ', isFormValid)
 	const handleClick = async (user) => {
 		await register(user);
 	};
@@ -41,7 +43,7 @@ const Register = () => {
 				onChange={handleChange}
 				helperText={!isUsernameValid && "Username must be at least 3 characters."}
 				error={!isUsernameValid}
-				disabled={session.isLoading}
+				disabled={isLoading}
 			/>
 			<TextField
 				required 
@@ -52,7 +54,7 @@ const Register = () => {
 				onChange={handleChange}
 				helperText={!isPasswordValid && "Password must contain at least 8 characters, a lower case letter, an upper case letter, and a number."}
 				error={!isPasswordValid}
-				disabled={session.isLoading}
+				disabled={isLoading}
 			/>
 			<TextField
 				required 
@@ -63,7 +65,7 @@ const Register = () => {
 				onChange={handleChange}
 				helperText={!isConfirmPasswordValid && "Passwords must match."}
 				error={!isConfirmPasswordValid}
-				disabled={session.isLoading}
+				disabled={isLoading}
 			/>
 			<TextField
 				required 
@@ -71,7 +73,7 @@ const Register = () => {
 				name="name"
 				value={user.name || ''}
 				onChange={handleChange}
-				disabled={session.isLoading}
+				disabled={isLoading}
 			/>
 			<TextField
 				required 
@@ -81,9 +83,19 @@ const Register = () => {
 				onChange={handleChange}
 				helperText={!isEmailValid && "Email Address Invalid"}
 				error={!isEmailValid}
-				disabled={session.isLoading}
+				disabled={isLoading}
 			/>
-			<Button onClick={() => handleClick(user)} color="primary" variant="contained" disabled={session.isLoading || isFormValid}>CREATE ACCOUNT</Button>
+			{error && (
+				<Typography color="error" variant="caption" gutterBottom>{error}</Typography>
+			)}
+			<Button
+				onClick={() => handleClick(user)}
+				color="primary"
+				variant="contained"
+				disabled={isLoading || isFormValid}
+			>
+				CREATE ACCOUNT
+			</Button>
 		</Container>
 	)
 };
