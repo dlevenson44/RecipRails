@@ -12,7 +12,8 @@ const Login = () => {
 		password: '',
 	});
 	const { username, password } = user;
-	const isButtonDisabled = !username.length && !password.length;
+	const { error, isLoading } = session;
+	const isButtonDisabled = !(username.length && password.length);
 	const handleChange = e => {
 		const { name, value } = e.target;
 		setUser({ ...user, [name]: value });
@@ -30,7 +31,7 @@ const Login = () => {
 				name="username"
 				value={username || ''}
 				onChange={handleChange}
-				disabled={session.isLoading}
+				disabled={isLoading}
 			/>
 			<TextField
 				type="password"
@@ -38,13 +39,16 @@ const Login = () => {
 				name="password"
 				value={password || ''}
 				onChange={handleChange}
-				disabled={session.isLoading}
+				disabled={isLoading}
 			/>
+			{error && (
+				<Typography color="error" variant="caption" gutterBottom>{error}</Typography>
+			)}
 			<Button
 				onClick={() => handleClick(user)}
 				color="primary"
 				variant="contained"
-				disabled={isButtonDisabled}
+				disabled={isButtonDisabled || isLoading}
 			>
 				LOGIN
 			</Button>

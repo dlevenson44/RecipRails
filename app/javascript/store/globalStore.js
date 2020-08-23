@@ -27,7 +27,7 @@ const store = createStore({
             actions.setUser(res.data);
           });
       } catch (e) {
-        actions.setFailedLogin(e)
+        actions.setFailedLogin(e.response.data.errors[0].detail)
         console.error(`Error Logging User In: ${e}`);
       }
     }),
