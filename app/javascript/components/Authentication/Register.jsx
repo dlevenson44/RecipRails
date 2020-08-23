@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Container, TextField, Typography } from '@material-ui/core';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import Validation from './validation';
@@ -6,7 +6,7 @@ import style from './forms';
 
 const Register = () => {
 	const classes = style();
-	const register = useStoreActions(actions => actions.user.register);
+	const userActions = useStoreActions(actions => actions.user);
 	const session = useStoreState(state => state.user);
 	const [user, setUser] = useState({
 		username: '',
@@ -15,6 +15,9 @@ const Register = () => {
 		name: '',
 		email: '',
 	});
+	useEffect(() => {
+		userActions.clearError();
+	}, []);
 	const { error, isLoading } = session;
 	const { username, password, confirmPassword, email, name } = user;
 	const isFormValid = Validation.isFormValid(username, password, confirmPassword, email, name);
@@ -27,7 +30,7 @@ const Register = () => {
 		setUser({ ...user, [name]: value });
 	};
 	const handleClick = async (user) => {
-		await register(user);
+		await userActions.register(user);
 	};
 
 	return (

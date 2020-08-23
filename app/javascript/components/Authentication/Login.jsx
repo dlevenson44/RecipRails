@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Container, TextField, Typography } from '@material-ui/core';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import style from './forms';
 
 const Login = () => {
 	const classes = style();
-	const login = useStoreActions(actions => actions.user.login);
+	const userActions = useStoreActions(actions => actions.user);
 	const session = useStoreState(state => state.user);
 	const [user, setUser] = useState({
 		username: '',
 		password: '',
 	});
+	useEffect(() => {
+		userActions.clearError();
+	}, []);
 	const { username, password } = user;
 	const { error, isLoading } = session;
 	const isButtonDisabled = !(username.length && password.length);
@@ -20,7 +23,7 @@ const Login = () => {
 	};
 
 	const handleClick = async (user) => {
-		await login(user);
+		await userActions.login(user);
 	};
 
 	return (

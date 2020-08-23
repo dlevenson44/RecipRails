@@ -87,9 +87,12 @@ const store = createStore({
       state.isLoading = false;
       state.error = errorMessage;
     }),
-    startLoading: action((state) => {
+    startLoading: action(state => {
       state.isLoading = true;
-    })
+    }),
+    clearError: action(state => {
+      state.error = null;
+    }),
   },
 });
 
