@@ -26,8 +26,6 @@ const Register = () => {
 		const { name, value } = e.target;
 		setUser({ ...user, [name]: value });
 	};
-	console.log('isLoading?   ', isLoading)
-	console.log('isFormValid?  ', isFormValid)
 	const handleClick = async (user) => {
 		await register(user);
 	};
@@ -97,7 +95,7 @@ const Register = () => {
 				CREATE ACCOUNT
 			</Button>
 		</Container>
-	)
+	);
 };
 
 export default Register;
