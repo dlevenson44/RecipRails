@@ -13,6 +13,24 @@ const store = createStore({
     isLoading: false,
     loggedInUser: null,
     error: null,
+    login: thunk(async (actions, payload) => {
+      actions.startLoading();
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+
+      try {
+        await axios.post('/login', payload, { headers })
+          .then(res => {
+            console.log('res:   ', res);
+            Auth.authenticateToken(res.data.token)
+            actions.setUser(res.data);
+          });
+      } catch (e) {
+        actions.setFailedLogin(e)
+        console.error(`Error Logging User In: ${e}`);
+      }
+    }),
     logout: thunk(async (actions, payload) => {
       const headers = {
         'Content-Type': 'application/json',
@@ -59,6 +77,10 @@ const store = createStore({
       state.isAuthenticated = true;
       state.loggedInUser = user;
       state.error = false;
+    }),
+    setFailedLogin: action((state, payload) => {
+      state.error = payload;
+      state.isLoading = false;
     }),
     setFailedRegister: action((state, payload) => {
       const errorMessage = payload.slice(19);
