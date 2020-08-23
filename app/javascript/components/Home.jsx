@@ -4,7 +4,6 @@ import Nav from './Nav';
 
 const Home = props => {
 	const { links, session } = props.state;
-	console.log('Home props:   ', props);
 
 	return (
 		<div>
