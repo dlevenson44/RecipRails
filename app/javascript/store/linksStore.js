@@ -1,5 +1,5 @@
 const links = {
-	authenticated: ['Saved Recipes', 'Edit Profile', 'Logout'],
+	authenticated: ['Saved Recipes', 'Logout'],
 	constant: 'Home',
 	unauthenticated: ['Login', 'Register']
 };
