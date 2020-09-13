@@ -1,24 +1,8 @@
-# README
+## ReciP
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ReciP allows you to search for different recipes, create an acount to bookmark your favorites or add your own recipes.  Currently a work in progress, this project has not yet been deployed
 
-Things you may want to cover:
+### Key Tech
+Backend runs on Rails 6 with a PostgreSQL database.  It utilizes the gems `Faraday` for third party API calls and `bcrypt` to encrypt passwords for accounts.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Frontend runs on React 16, and utilizes `easy-peasy` for axios calls and state management and `Material-UI` for styling.
