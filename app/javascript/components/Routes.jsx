@@ -7,6 +7,7 @@ import Home from './Home';
 import Login from './Authentication/Login';
 import Register from './Authentication/Register';
 import SearchBar from './RecipeSearch/SearchBar';
+import SearchResults from './RecipeSearch/SearchResults';
 
 const Routes = () => {
 	const state = useStoreState(state => state);
@@ -17,6 +18,7 @@ const Routes = () => {
 		<BrowserRouter>
 			<Nav links={state.links} isAuthenticated={authenticated} />
 			<SearchBar />
+			<SearchResults />
 			<Switch>
 				<Route exact path="/" component={() => <Home state={state} />} />
 				<Route path="/login" render={() => (!authenticated ? <Login state={state} /> : <Redirect to="/" /> )} />

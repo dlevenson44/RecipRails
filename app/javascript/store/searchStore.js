@@ -19,7 +19,7 @@ const search = {
 						return actions.setFailedSearch(true)
 					}
 
-					return actions.setSuccessfulSearch(res.data.results)
+					return actions.setSuccessfulSearch(res.data.results.hits)
 				})
 		} catch(e) {
 			console.error('Search Error:   ', e);

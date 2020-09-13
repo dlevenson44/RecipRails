@@ -21,6 +21,7 @@ const SearchBar = () => {
 				value={searchPhrase || ''}
 				onChange={handleChange}
 				error={!!error}
+				helperText={!!error && 'No Recipes Found!'}
 				disabled={isLoading}
 			/>
 			<Button
