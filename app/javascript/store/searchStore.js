@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const search = {
 	isLoading: false,
-	error: null,
+	error: false,
 	results: [],
 	search: thunk(async (actions, payload) => {
 		actions.startLoading();
@@ -15,20 +15,24 @@ const search = {
 		try {
 			await axios.get('/search', { headers })
 				.then(res => {
-					actions.setSuccessfulSearch(res.data)
+					if (!res.data.results.count) {
+						return actions.setFailedSearch(true)
+					}
+
+					return actions.setSuccessfulSearch(res.data.results)
 				})
 		} catch(e) {
 			console.error('Search Error:   ', e);
-			actions.setFailedSearch(e);
+			actions.setFailedSearch(true);
 		}
 	}),
 	setSuccessfulSearch: action((state, payload) => {
 		state.isLoading = false;
 		state.results = payload;
 	}),
-	setFailedSearch: action((state, payload) => {
+	setFailedSearch: action(state => {
 		state.isLoading = false;
-		state.error = payload;
+		state.error = true;
 	}),
 	startLoading: action(state => {
 		state.isLoading = true;

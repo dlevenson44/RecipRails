@@ -6,7 +6,7 @@ import Nav from './Nav';
 import Home from './Home';
 import Login from './Authentication/Login';
 import Register from './Authentication/Register';
-import SearchBar from './SearchBar';
+import SearchBar from './RecipeSearch/SearchBar';
 
 const Routes = () => {
 	const state = useStoreState(state => state);
