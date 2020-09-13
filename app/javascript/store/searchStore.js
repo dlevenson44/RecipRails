@@ -15,21 +15,18 @@ const search = {
 		try {
 			await axios.get('/search', { headers })
 				.then(res => {
-					console.log('results:   ', res)
 					actions.setSuccessfulSearch(res.data)
 				})
 		} catch(e) {
-			console.log('e search:   ', e);
+			console.error('Search Error:   ', e);
 			actions.setFailedSearch(e);
 		}
 	}),
 	setSuccessfulSearch: action((state, payload) => {
-		console.log('search payload:   ', payload)
 		state.isLoading = false;
 		state.results = payload;
 	}),
 	setFailedSearch: action((state, payload) => {
-		console.log('error payload:   ', payload)
 		state.isLoading = false;
 		state.error = payload;
 	}),
