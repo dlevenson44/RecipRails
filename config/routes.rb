@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
   post '/register' => 'users#create'
   get '/profile' => 'users#profile_request'
+  get '/search' =>  'recipes#search'
 
   # Handles all non-API/Ajax requests
   get '*page', to: 'api#index', constraints: ->(req) do
