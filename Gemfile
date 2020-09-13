@@ -35,7 +35,7 @@ gem 'faker'
 gem 'rubocop-faker'
 
 # Used for 3rd party API calls
-gem 'dotenv-rails'
+gem 'dotenv-rails', groups: [:development, :test]
 gem 'faraday'
 
 group :development, :test do
