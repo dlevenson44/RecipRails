@@ -9,6 +9,7 @@ const search = {
 		actions.startLoading();
 		const headers = {
 			'Content-Type': 'application/json',
+			payload,
 		};
 
 		try {
