@@ -6,21 +6,19 @@ import Nav from './Nav';
 import Home from './Home';
 import Login from './Authentication/Login';
 import Register from './Authentication/Register';
-import SearchBar from './RecipeSearch/SearchBar';
-import SearchResults from './RecipeSearch/SearchResults';
+import Search from './RecipeSearch/Search';
 
 const Routes = () => {
 	const state = useStoreState(state => state);
+	const { isAuthenticated } = state.user;
 
 	return (
 		<BrowserRouter>
 			<Nav links={state.links} />
-			<SearchBar />
-			<SearchResults />
 			<Switch>
-				<Route exact path="/" component={() => <Home state={state} />} />
-				<Route path="/login" render={() => (!authenticated ? <Login state={state} /> : <Redirect to="/" /> )} />
-				<Route path="/register" render={() => (!authenticated ? <Register state={state} /> : <Redirect to="/" />)} />
+				<Route exact path="/" component={() => <Search />} />
+				<Route path="/login" render={() => (!isAuthenticated ? <Login /> : <Redirect to="/" /> )} />
+				<Route path="/register" render={() => (!isAuthenticated ? <Register /> : <Redirect to="/" />)} />
 			</Switch>
 		</BrowserRouter>
 	);
