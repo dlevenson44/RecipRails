@@ -4,9 +4,10 @@ class CreateFavorites < ActiveRecord::Migration[6.0]
       t.string :label
       t.string :calories
       t.string :instructions
+      t.string :ingredients, array: true
+      t.belongs_to :user
 
       t.timestamps
     end
-    add_column :favorites, :ingredients, :text, array: true, default: []
   end
 end

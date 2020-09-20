@@ -19,9 +19,11 @@ ActiveRecord::Schema.define(version: 2020_09_13_192156) do
     t.string "label"
     t.string "calories"
     t.string "instructions"
+    t.string "ingredients", array: true
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "ingredients", default: [], array: true
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
