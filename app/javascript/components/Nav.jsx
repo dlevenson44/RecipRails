@@ -6,8 +6,9 @@ import { Link, Typography } from '@material-ui/core';
 import Auth from './Authentication/authHelpers';
 
 const Nav = props => {
-	const { links, isAuthenticated } = props;
+	const { links } = props;
 	const logout = useStoreActions(actions => actions.user.logout);
+	const isAuthenticated = useStoreState(state => state.user.isAuthenticated)
 	const token = Auth.getToken();
 	const handleClick = async () => {
 		await logout(token);

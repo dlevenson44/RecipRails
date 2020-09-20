@@ -11,12 +11,10 @@ import SearchResults from './RecipeSearch/SearchResults';
 
 const Routes = () => {
 	const state = useStoreState(state => state);
-	const { isAuthenticated } = state.user;
-	const authenticated = Auth.isUserAuthenticated() || isAuthenticated;
 
 	return (
 		<BrowserRouter>
-			<Nav links={state.links} isAuthenticated={authenticated} />
+			<Nav links={state.links} />
 			<SearchBar />
 			<SearchResults />
 			<Switch>

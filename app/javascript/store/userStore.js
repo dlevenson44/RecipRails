@@ -3,7 +3,7 @@ import axios from 'axios';
 import Auth from '../components/Authentication/authHelpers';
 
 const user = {
-	isAuthenticated: false,
+	isAuthenticated: Auth.isUserAuthenticated(),
 	isLoading: false,
 	loggedInUser: null,
 	error: null,
