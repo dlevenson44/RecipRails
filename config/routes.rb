@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/favorite' => 'favorites#index'
   post '/favorite' => 'favorites#create'
   delete '/favorite' => 'favorites#destroy'
   post '/login' => 'sessions#create'

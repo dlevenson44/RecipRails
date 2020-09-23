@@ -1,8 +1,10 @@
 import { thunk, action } from 'easy-peasy';
 import axios from 'axios';
+import Auth from '../components/Authentication/authHelpers'
 
 const favorite = {
 	isLoading: false,
+	favorites: null,
 	add: thunk(async (actions, payload) => {
 		actions.startLoading();
 		const { token, calories, label, ingredientLines, shareAs } = payload;
@@ -31,6 +33,26 @@ const favorite = {
 			console.error(`Error Adding Favorite:   ${e}`)
 		}
 	}),
+	fetch: thunk(async (actions, payload) => {
+		actions.startLoading();
+		const token = Auth.getToken()
+		const headers = {
+			'Content-Type': 'application/json',
+			'token': token,
+			'Authorization': `Token ${token}`
+		}
+
+		try {
+			await axios.get('/favorite', { headers })
+				.then(res => {
+					console.log('res:   ', res)
+					actions.successfulRecipeFetch(res.data)
+				})
+		} catch (e) {
+			actions.setError();
+			console.error(`Error Fetching Favorites:   ${e}`)
+		}
+	}),
 	remove: thunk(async (actions, payload) => {
 		actions.startLoading();
 		const headers = {
@@ -46,6 +68,10 @@ const favorite = {
 			actions.setError();
 			console.error(`Error Removing Favorite:   ${e}`)
 		}
+	}),
+	successfulRecipeFetch: action((state, payload) => {
+		state.isLoading = false;
+		state.favorites = payload
 	}),
 	successfulCall: action((state, payload) => {
 		state.isLoading = false;
