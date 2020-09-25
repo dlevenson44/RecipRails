@@ -4,7 +4,7 @@ import Auth from '../components/Authentication/authHelpers'
 
 const favorite = {
 	isLoading: false,
-	favorites: null,
+	results: null,
 	add: thunk(async (actions, payload) => {
 		actions.startLoading();
 		const { token, calories, label, ingredientLines, shareAs } = payload;
@@ -35,7 +35,7 @@ const favorite = {
 	}),
 	fetch: thunk(async (actions, payload) => {
 		actions.startLoading();
-		const token = Auth.getToken()
+		const { token } = payload;
 		const headers = {
 			'Content-Type': 'application/json',
 			'token': token,
@@ -55,9 +55,12 @@ const favorite = {
 	}),
 	remove: thunk(async (actions, payload) => {
 		actions.startLoading();
+		const { token, id } = payload
 		const headers = {
 			'Content-Type': 'application/json',
-		};
+			'token': token,
+			'Authorization': `Token ${token}`
+		}
 
 		try {
 			await axios.delete('/favorite', payload, { headers })
