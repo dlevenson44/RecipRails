@@ -5,7 +5,8 @@ class CreateFavorites < ActiveRecord::Migration[6.0]
       t.string :calories
       t.string :instructions
       t.string :ingredients, array: true
-      t.belongs_to :user
+      # NEXT STEP TODO IS FIX ADDING RECIPES
+      t.belongs_to :user, index: true
 
       t.timestamps
     end

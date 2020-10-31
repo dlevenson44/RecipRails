@@ -14,6 +14,7 @@ class FavoritesController < ApiController
     favorite.user = current_user
     if favorite.save
       render status: 200, json: { id: favorite.id }
+    end
   rescue => e
     render status: 422, json: { message: e }
   end
