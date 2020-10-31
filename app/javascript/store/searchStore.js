@@ -4,7 +4,7 @@ import axios from 'axios';
 const search = {
 	isLoading: false,
 	error: false,
-	results: [],
+	results: null,
 	search: thunk(async (actions, payload) => {
 		actions.startLoading();
 		const headers = {

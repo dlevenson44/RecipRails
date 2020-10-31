@@ -27,14 +27,14 @@ const Recipe = ({
 				<Typography key={idx}>{ingredient}</Typography>
 			))}
 			<Typography>Instructions:  <a href={instructions}>Click Here!</a></Typography>
-			{isAuthenticated && <FavoriteButton onClick={onClick(recipe)} text="Add Favorite" />}
+			{isAuthenticated && <FavoriteButton onClick={() => onClick(recipe)} text="Add Favorite" />}
 		</Card>
 	);
 };
 
 Recipe.propTypes = {
 	label:  PropTypes.string.isRequired,
-	calories: PropTypes.string.isRequired,
+	calories: PropTypes.number.isRequired,
 	ingredients: PropTypes.array.isRequired,
 	instructions: PropTypes.string.isRequired,
 	id: PropTypes.string,

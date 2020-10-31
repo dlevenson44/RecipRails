@@ -6,30 +6,29 @@ import Auth from '../Authentication/authHelpers';
 const SearchResults = () => {
 	const { isAuthenticated } = useStoreState(state => state.user)
 	const { results } = useStoreState(state => state.search);
-	const { add } = useStoreActions(actions => actions.favorites)
+	const { add } = useStoreActions(actions => actions.favorite);
 	const token = Auth.getToken()
 	const handleClick = recipe => {
 		console.log('adding recipe:   ', recipe)
 		return add({ ...recipe, token })
 	}
 
-	if (!!results.length) {
-		return results.map(({
-			calories,
-			label,
-			ingredientLines,
-			shareAs
-		}, idx) => (
-			<Recipe
-				label={label}
-				calories={calories}
-				ingredients={shareAs}
-				instructions={ingredientLines}
-				key={idx}
-				isAuthenticated={isAuthenticated}
-				onClick={handleClick}
-			/>
-		));
+	if (results) {
+		return results.map(({ recipe }, idx) => {
+			const { calories, label, ingredientLines, shareAs } = recipe;
+
+			return (
+				<Recipe
+					label={label}
+					calories={calories}
+					ingredients={ingredientLines}
+					instructions={shareAs}
+					key={idx}
+					isAuthenticated={isAuthenticated}
+					onClick={handleClick}
+				/>
+			);
+		});
 	};
 
 	return null;

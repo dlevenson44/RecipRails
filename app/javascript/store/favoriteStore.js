@@ -7,21 +7,22 @@ const favorite = {
 	results: null,
 	add: thunk(async (actions, payload) => {
 		actions.startLoading();
-		const { token, calories, label, ingredientLines, shareAs } = payload;
+		const { token, calories, label, instructions, ingredients } = payload;
 		const headers = {
 			'Content-Type': 'application/json',
 			'token': token,
 			'Authorization': `Token ${token}`,
 		};
-
+		console.log('payload:   ', payload)
 		const favoriteData = {
 			favorite: {
 				label,
 				calories,
-				instructions: shareAs,
-				ingredients: ingredientLines,
+				instructions,
+				ingredients,
 			},
 		};
+		console.log('favorite data:   ', favoriteData)
 
 		try {
 			await axios.post('/favorite', favoriteData, { headers })
