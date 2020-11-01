@@ -9,20 +9,27 @@ const SearchResults = () => {
 	const { add } = useStoreActions(actions => actions.favorite);
 	const token = Auth.getToken()
 	const handleClick = recipe => {
-		console.log('adding recipe:   ', recipe)
 		return add({ ...recipe, token })
 	}
 
 	if (results) {
-		return results.map(({ recipe }, idx) => {
-			const { calories, label, ingredientLines, shareAs } = recipe;
+		return results.map((recipeResult, idx) => {
+			let recipe = {}
+			if (recipeResult.recipe) {
+				const { calories, label, ingredientLines, shareAs } = recipeResult.recipe;
+				recipe = { calories, label, ingredients: ingredientLines, instructions: shareAs  };
+			} else {
+				const { calories, label, ingredients, instructions } = recipeResult;
+				recipe = { calories, label, ingredients, instructions  };
+			}
+			const { calories, label, ingredients, instructions } = recipe;
 
 			return (
 				<Recipe
 					label={label}
 					calories={calories}
-					ingredients={ingredientLines}
-					instructions={shareAs}
+					ingredients={ingredients}
+					instructions={instructions}
 					key={idx}
 					isAuthenticated={isAuthenticated}
 					onClick={handleClick}

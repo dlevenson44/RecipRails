@@ -15,6 +15,7 @@ const search = {
 		try {
 			await axios.get('/search', { headers })
 				.then(res => {
+					console.log('response:   ', res)
 					if (!res.data.results.count) {
 						return actions.setFailedSearch(true)
 					}
@@ -27,6 +28,7 @@ const search = {
 		}
 	}),
 	setSuccessfulSearch: action((state, payload) => {
+		console.log('payload:   ', payload)
 		state.isLoading = false;
 		state.results = payload;
 	}),
